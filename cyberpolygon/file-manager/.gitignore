@@ -1,0 +1,4 @@
+database.json
+__pycache__/
+.vscode/
+.idea/ 
