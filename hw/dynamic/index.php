@@ -8,9 +8,9 @@
 <?php
 if (isset($_GET['place'])) {
     $place = $_GET['place'];
-    $url = "https://wttr.in/{$place}"; 
+    $url = "https://wttr.in/{$place}?0"; 
     $response = file_get_contents($url);
-    echo "<pre style='font-size: 8px;'>";
+    echo "<pre style='font-size: 14px;'>";
     print_r($response);
     echo "</pre>";
 }
