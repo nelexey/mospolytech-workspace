@@ -1,0 +1,109 @@
+a {
+    color: black;
+}
+
+.main-outline {
+    /*position: relative;*/
+    max-width: 90%; /* Значительный отступ от краёв */
+    margin: 5% auto; /* Центрирование по горизонтали и отступ сверху/снизу */
+    padding: 4px; /* Расстояние для белой рамки */
+    background-color: #ffffff; /* Белый фон для рамки */
+    border-radius: 70px; /* Скругление углов (больше, чем у внутреннего контейнера) */
+    box-sizing: border-box;
+}
+
+
+.main-container {
+    background-color: #ffffff; /* Белый фон */
+    color: #000000; /* Чёрный текст */
+    padding: 40px 40px; /* Отступы внутри контейнера */
+    border-radius: 68px; /* Скругление углов */
+    border: 3px solid #000000; /* Чёрная рамка */
+    overflow-y: auto; /* Скролл внутри контейнера */
+    /*max-height: 80vh; !* Ограничение по высоте *!*/
+    box-sizing: border-box;
+}
+
+.main-container p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.main-header {
+    border-radius: 66px; /* Скругление углов */
+    border: 3px solid #000000; /* Чёрная рамка */
+    padding: 6px 26px;
+}
+
+.main-logo {
+
+}
+
+.main-header a {
+    color: black;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: larger;
+    margin-right: 30px;
+}
+
+.main-header a:hover {
+    color: #ff8400;
+    transition: linear 0.1s;
+}
+
+.main-flex {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.main-flex-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.main-flex-card {
+    width: 100%;
+    margin: auto;
+    padding: 56px;
+
+    border-radius: 66px;
+    border: 3px solid white;
+
+    background-color: black;
+    color: white;
+    font-weight: 400;
+
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2.4rem;
+}
+
+.main-flex-card:hover {
+    color: black;
+    background-color: #ff8400;
+    transition: linear 0.1s;
+}
+
+.main-content {
+    margin-top: 20px;
+    padding: 30px 40px 20px; /* Отступы внутри контейнера */
+    border-radius: 56px; /* Скругление углов */
+    border: 3px solid #000000; /* Чёрная рамка */
+    overflow-y: auto; /* Скролл внутри контейнера */
+}
+
+.main-footer {
+    max-width: 90%; /* Значительный отступ от краёв */
+    margin: 5% auto; /* Центрирование по горизонтали и отступ сверху/снизу */
+    display: flex;
+    justify-content: center;
+
+    & p {
+        color: #cccccc;
+    }
+}

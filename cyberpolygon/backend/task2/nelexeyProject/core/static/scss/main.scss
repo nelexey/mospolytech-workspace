@@ -1,0 +1,27 @@
+@import './style'; // Подключение основного файла стилей
+
+// Styles for the home container
+.home-container {
+  position: relative;
+  max-width: 90%; // Значительный отступ от краёв
+  margin: 5% auto 5%; // Центрирование по горизонтали и отступ сверху и снизу
+  padding: 20px;
+  background-color: #ffffff; // Белый фон
+  color: #000000; // Черный текст
+  border-radius: 100px; // Скругление углов
+  border: 5px solid #ffffff; // Внешняя белая обводка
+  box-shadow: 0 0 0 10px #000000; // Внутренняя черная обводка
+  overflow: hidden; // Прячем содержимое, выходящее за границы
+  box-sizing: border-box;
+
+  // Scroll inside the container if content overflows
+  overflow-y: auto;
+  max-height: 80vh; // Ограничение по высоте с отступом от дна
+
+  // Example child styles
+  p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+}
+

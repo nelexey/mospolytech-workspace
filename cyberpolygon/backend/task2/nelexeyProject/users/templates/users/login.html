@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Вход{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <a class="login-text" href="{% url 'core:home' %}">>>> На главную...</a>
+    <p class="login-text">>>> Проникновение в систему тестирования...</p>
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        <div>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <div style="display: flex; align-items: baseline;">
+            <p class="login-text">>>></p>
+        <button type="submit" class="login-btn">Войти</button>
+        </div>
+    </form>
+{% endblock %}

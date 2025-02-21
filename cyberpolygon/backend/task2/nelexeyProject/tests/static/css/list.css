@@ -1,0 +1,53 @@
+.tests-flex {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 40px 0 30px;
+    flex-wrap: wrap;
+}
+
+.tests-flex-card {
+    border: 3px solid black;
+    min-width: 30%;
+    margin: 1%;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+
+    background-color: black;
+}
+
+.tests-test-title {
+    color: white;
+    font-size: 3rem;
+    text-transform: uppercase;
+
+    margin: 0;
+}
+
+.tests-test-cat {
+    color: #cccccc;
+
+    margin: 0;
+}
+
+.tests-test-diff {
+    color: #cccccc;
+
+    margin: 0;
+}
+
+.tests-flex-card:hover {
+    background-color: #ff8400;
+    border: #ff8400;
+    color: black;
+
+    .tests-test-diff {
+        color: black;
+    }
+
+    .tests-test-cat {
+        color: black;
+    }
+
+    transition: linear 0.2s;
+}

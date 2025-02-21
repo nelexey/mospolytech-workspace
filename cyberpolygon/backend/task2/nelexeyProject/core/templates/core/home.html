@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for test in recent_tests %}
+        <li>
+            <a href="{% url 'test_detail' test.id %}">{{ test.title }}</a>
+            ({{ test.category }})
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

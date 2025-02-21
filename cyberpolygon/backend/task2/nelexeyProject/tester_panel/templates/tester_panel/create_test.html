@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Создание теста{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .question-block {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .variant-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .delete-question {
+            color: red;
+            border: 1px solid red;
+            background: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Создание нового теста</h1>
+    <form method="post" id="test-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Название теста:</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label for="description">Описание теста:</label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Длительность (в минутах):</label>
+            {{ form.duration }}
+        </div>
+
+        <div class="form-group">
+            <label for="difficulty">Сложность:</label>
+            {{ form.difficulty }}
+        </div>
+
+        <div class="form-group">
+            <label for="category">Категория:</label>
+            {{ form.category }}
+        </div>
+
+        <div class="form-group">
+            <label for="attempts_allowed">Количество попыток:</label>
+            {{ form.attempts_allowed }}
+        </div>
+
+        <div class="form-group">
+            <label>
+                {{ form.is_published }}
+                Опубликовать тест
+            </label>
+        </div>
+
+        <div id="questions-container">
+            <!-- Сюда будут добавляться вопросы через JavaScript -->
+        </div>
+
+        <button type="button" id="add-question" class="btn btn-primary">Добавить вопрос</button>
+        <button type="submit" class="btn btn-success">Сохранить тест</button>
+    </form>
+    {% block extra_js %}
+        <script type="module">
+            import TestEditor from '{% static "js/testEditor.js" %}';
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const editor = new TestEditor();
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
+

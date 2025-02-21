@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ test.title }}</h1>
+    <p>{{ test.description }}</p>
+    <p>Категория: {{ test.category }}</p>
+    <p>Сложность: {{ test.get_difficulty_display }}</p>
+    <p>Время на выполнение: {{ test.duration }} минут</p>
+    <p>Доступно попыток: {{ attempts_left }} из {{ test.attempts_allowed }}</p>
+
+    {% if attempts_left > 0 %}
+        <a href="{% url 'tests:test_attempt' test.id attempts_left %}">Начать тест</a>
+    {% else %}
+        <p>Попытки закончились</p>
+    {% endif %}
+
+    {% if attempts %}
+        <h2>Попытки:</h2>
+        <ul>
+        {% for attempt in attempts %}
+            <li>
+                Попытка {{ attempt.attempt_number }}:
+                {{ attempt.percentage|floatformat:1 }}%
+                ({{ attempt.date_taken|date:"d.m.Y" }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+.panel-flex {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+
+    margin-bottom: 40px;
+}
+
+.panel-flex-card {
+    width: 48%;
+    padding: 40px;
+    box-sizing: border-box;
+
+    text-align: center;
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+
+    border-radius: 40px;
+
+    &:hover {
+        background-color: #ff8400;
+        color: black;
+    }
+
+    transition: linear 0.2s;
+}
+
+.panel-tests-flex {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 40px 0 30px;
+    flex-wrap: wrap;
+}
+
+.panel-tests-flex-card {
+    min-width: 30%;
+    background-color: black;
+    margin: 1%;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+
+    p {
+        color: white;
+        margin: 0;
+        text-align: end;
+    }
+
+    a {
+        color: white;
+    }
+
+    a:hover {
+        /*background-color: #ff8400;*/
+        color: #ff8400;
+        transition: linear 0.2s;
+    }
+
+}
+
+.panel-test-title {
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin-right: 10px;
+}

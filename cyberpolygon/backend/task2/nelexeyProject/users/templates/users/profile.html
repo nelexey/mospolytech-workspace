@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Профиль {{ profile_user.username }}{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Профиль пользователя {{ profile_user.username }}</h1>
+    <p>Имя: {{ profile_user.name }}</p>
+    <p>Фамилия: {{ profile_user.surname }}</p>
+    <p>Тестов пройдено: {{ tests_taken }}</p>
+    <p>Средний балл: {{ average_score|default:"0"|floatformat:1 }}%</p>
+    
+    <h2>История тестов:</h2>
+    <ul>
+    {% for stat in stats %}
+        <li>
+            {{ stat.test.title }} - {{ stat.percentage|floatformat:1 }}%
+            ({{ stat.date_taken|date:"d.m.Y" }})
+        </li>
+    {% empty %}
+        <li>Нет пройденных тестов</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,45 @@
+.home-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-stat {
+    font-size: 6rem;
+    margin: 0;
+}
+
+.home-stat-text {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.home-attempts {
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.home-attempt-flex {
+    display: flex;
+    justify-content: space-evenly;
+
+
+    a {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    p:hover {
+        color: #ff8400;
+    }
+
+}
+
+hr {
+    all: unset;
+    border-bottom: 3px solid black;
+}

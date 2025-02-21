@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Мой профиль{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <h1>Добро пожаловать, {{ user.username }}!</h1>
+
+    <div class="home-flex">
+        <div class="home-flex-column">
+            <p class="home-stat">{{ total_tests_taken }}</p>
+            <p class="home-stat-text">кол-во пройденных тестов</p>
+        </div>
+        <div class="home-flex-column">
+            <p class="home-stat">{{ average_score|default:"0"|floatformat:1 }}%</p>
+            <p class="home-stat-text">средний балл</p>
+        </div>
+        <div class="home-flex-column home-attempts">
+            <h1>Последние попытки:</h1>
+            <hr>
+            {% for attempt in recent_attempts %}
+                <a href="{% url 'tests:test_detail' test_id=attempt.test_id %}">
+                    {{ attempt.test.title }} - {{ attempt.percentage|floatformat:1 }}%
+                    ({{ attempt.date_taken|date:"d.m.Y" }})
+                </a><br>
+            {% empty %}
+                ( пусто )
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

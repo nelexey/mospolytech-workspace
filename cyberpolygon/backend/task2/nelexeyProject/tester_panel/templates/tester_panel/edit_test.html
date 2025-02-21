@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Редактирование теста{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .question-block {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .variant-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .delete-question {
+            color: red;
+            border: 1px solid red;
+            background: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Редактирование теста</h1>
+    <form method="post" id="test-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div id="questions-container">
+            <!-- Questions will be loaded via JavaScript -->
+        </div>
+
+        <button type="button" id="add-question">Добавить вопрос</button>
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <script>
+        const testData = {{ test_json|default:'{}' |safe }};
+    </script>
+
+    {% block extra_js %}
+        <script type="module">
+            import TestEditor from '{% static "js/testEditor.js" %}';
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                const editor = new TestEditor(testData);  // Pass testData to editor
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

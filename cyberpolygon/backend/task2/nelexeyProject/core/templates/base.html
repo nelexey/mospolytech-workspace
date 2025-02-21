@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Test Platform{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+
+    {% block header %}{% endblock %}
+</head>
+<body>
+<div class="main-outline">
+    <div class="main-container">
+        {% if user.is_authenticated %}
+            <header class="main-header">
+                <nav>
+                    <a href="{% url 'core:home' %}">Главная</a>
+                    <a href="{% url 'tests:test_list' %}">Тесты</a>
+                    <a href="{% url 'users:user_home' %}">Мой профиль</a>
+                    {% if user.role == 'tester' %}
+                        <a href="{% url 'tester_panel:tester_panel' %}">Панель тестера</a>
+                    {% endif %}
+                    <a href="{% url 'users:logout' %}">Выйти</a>
+
+                </nav>
+            </header>
+        {% else %}
+            <div class="main-flex">
+                <div class="main-flex-row">
+
+                    <a class="main-flex-card" href="{% url 'users:login' %}">
+                        Войти
+                    </a>
+
+
+                    <a class="main-flex-card" href="{% url 'users:register' %}">
+                        Регистрация
+                    </a>
+
+                </div>
+{#                <div class="main-flex-row">#}
+{##}
+{#                    <div class="main-flex-card">#}
+{#                        text#}
+{#                    </div>#}
+{##}
+{##}
+{#                    <div class="main-flex-card">#}
+{#                        text#}
+{#                    </div>#}
+{##}
+{#                </div>#}
+
+
+            </div>
+        {% endif %}
+
+        
+        <main class="main-content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+<footer class="main-footer">
+    <p>© 2024 Test Platform</p>
+</footer>
+</body>
+</html>

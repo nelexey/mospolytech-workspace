@@ -1,0 +1,179 @@
+/* Global Styles */
+body {
+    background-color: #000000; /* Фон страницы (чёрный) */
+    color: #000000; /* Основной цвет текста */
+    font-family: "IBM Plex Mono", serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 20px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+p {
+    color: #000000; /* Вторичный цвет текста */
+    line-height: 1.5;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff8400;
+}
+
+button:hover {
+    background-color: #e0e0e0; /* Эффект при наведении */
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+input {
+    all: unset;
+    box-sizing: border-box;
+
+    background-color: transparent;
+    color: black;
+    font-size: 1rem;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 3px 16px;
+
+    &::placeholder {
+        color: gray;
+        font-size: 1rem;
+    }
+
+/ / Стили при фокусе &: focus {
+    outline: none;
+    /*border-color: darkgray;*/
+}
+}
+
+textarea {
+    all: unset;
+    box-sizing: border-box;
+
+    background-color: transparent;
+    color: black;
+    font-size: 1rem;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 3px 16px;
+
+    &::placeholder {
+        color: gray;
+        font-size: 1rem;
+    }
+}
+
+button {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+
+    background-color: black;
+    color: white;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 3px 16px;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: #ff8400;
+        border: 3px solid #ff8400;
+        color: black;
+    }
+
+    &:active {
+        /*background-color: darkgray;*/
+    }
+
+    &:focus {
+        outline: none;
+        /*border-color: gray;*/
+    }
+}
+
+select {
+    all: unset;
+    background-color: black;
+    color: white;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: #ff8400;
+        border: 3px solid #ff8400;
+        color: black;
+    }
+
+    &:active {
+        /*background-color: darkgray;*/
+    }
+
+    &:focus {
+        outline: none;
+        /*border-color: gray;*/
+    }
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid black;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #ff8400;
+}
+
+/* Radio Button */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    border: 2px solid black;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked {
+    background-color: #ff8400;
+}
+
+.form-group {
+    margin: 10px 0;
+}

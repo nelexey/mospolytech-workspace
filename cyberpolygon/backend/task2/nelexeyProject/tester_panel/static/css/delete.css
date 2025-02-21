@@ -1,0 +1,32 @@
+.delete-flex {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 40px 0 30px;
+    flex-wrap: wrap;
+}
+
+.delete-flex-card {
+    width: 30%;
+    margin: 1%;
+}
+
+.test-title {
+    border: 3px solid black;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.test-title-text {
+    text-transform: uppercase;
+}
+
+
+.delete-button {
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+}

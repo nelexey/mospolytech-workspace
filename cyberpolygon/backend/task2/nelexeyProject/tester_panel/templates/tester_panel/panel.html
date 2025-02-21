@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Панель тестера{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <h1>Панель управления тестами</h1>
+    <div class="panel-flex">
+        <a class="panel-flex-card" href="{% url 'tester_panel:create_test' %}">Создать новый тест</a>
+        <a class="panel-flex-card" href="{% url 'tester_panel:delete_test_list' %}">Управление тестами</a>
+    </div>
+
+    <h2>Ваши тесты:</h2>
+    <div class="panel-tests-flex">
+        {% for test in tests %}
+            <div class="panel-tests-flex-card">
+            <div style="display: flex; flex-wrap: nowrap; justify-content: space-between">
+                <a href="{% url 'tests:test_detail' test.id %}" class="panel-test-title">{{ test.title }}</a>
+                <div>
+                    <p>{{ test.category }}</p>
+                    <p>{{ test.difficulty }}</p>
+                    <p>{% if test.is_published %}Опубликован{% else %}Черновик{% endif %}</p>
+                </div>
+            </div>
+
+                <div>
+                    <a href="{% url 'tester_panel:edit_test' test.id %}">Редактировать</a>
+                </div>
+            </div>
+        {% empty %}
+            <li>Нет доступных тестов</li>
+        {% endfor %}
+    </div>
+
+{% endblock %}
