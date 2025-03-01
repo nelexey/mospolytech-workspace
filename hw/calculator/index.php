@@ -4,6 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Простой калькулятор</title>
+    <?php
+    function customEval($expression) {
+        // Удаляем все пробелы из выражения
+        $expression = str_replace(' ', '', $expression);
+        
+        // Функция для вычисления простого выражения без скобок
+        function evaluateSimple($expr) {
+            // Сначала обрабатываем умножение и деление
+            while (preg_match('/(-?\d+\.?\d*)([\*\/])(-?\d+\.?\d*)/', $expr, $matches)) {
+                $left = $matches[1];
+                $operator = $matches[2];
+                $right = $matches[3];
+                $result = 0;
+                
+                if ($operator == '*') {
+                    $result = $left * $right;
+                } elseif ($operator == '/') {
+                    if ($right == 0) {
+                        throw new Exception("Деление на ноль");
+                    }
+                    $result = $left / $right;
+                }
+                
+                $expr = str_replace($matches[0], $result, $expr);
+            }
+            
+            // Затем обрабатываем сложение и вычитание
+            // Сначала преобразуем все вхождения -- в +
+            $expr = str_replace('--', '+', $expr);
+            
+            // Обработка унарных операторов в начале строки
+            if (substr($expr, 0, 1) == '+') {
+                $expr = substr($expr, 1);
+            }
+            
+            // Обработка сложения и вычитания
+            while (preg_match('/(-?\d+\.?\d*)([\+\-])(-?\d+\.?\d*)/', $expr, $matches)) {
+                $left = $matches[1];
+                $operator = $matches[2];
+                $right = $matches[3];
+                $result = 0;
+                
+                if ($operator == '+') {
+                    $result = $left + $right;
+                } elseif ($operator == '-') {
+                    $result = $left - $right;
+                }
+                
+                $expr = str_replace($matches[0], $result, $expr);
+            }
+            
+            return $expr;
+        }
+        
+        // Обработка скобок с использованием рекурсии
+        while (preg_match('/\(([^()]+)\)/', $expression, $matches)) {
+            $subResult = evaluateSimple($matches[1]);
+            $expression = str_replace($matches[0], $subResult, $expression);
+        }
+        
+        // Вычисление окончательного результата
+        return evaluateSimple($expression);
+    }
+    ?>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,7 +130,8 @@
                     $expression = $_POST['expression'];
                     if(preg_match('/^[0-9\+\-\*\/\(\)\.\s]+$/', $expression)) {
                         try {
-                            $result = eval("return $expression;");
+                            // Заменяем eval() на нашу собственную функцию
+                            $result = customEval($expression);
                             echo $result;
                         } catch(Throwable $e) {
                             echo "Ошибка";
@@ -108,6 +173,19 @@
         </form>
     </div>
 
-    <script src="dynamic_string.js"></script>
+    <script>
+        function addToDisplay(value) {
+            const display = document.getElementById('display');
+            if (display.value === '0' && value !== '.') {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+        }
+        
+        function clearDisplay() {
+            document.getElementById('display').value = '0';
+        }
+    </script>
 </body>
 </html> 
