@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/<int:test_id>/', views.edit_test, name='edit_test'),
     path('delete/', views.delete_test_list, name='delete_test_list'),
     path('delete/<int:test_id>/', views.delete_test, name='delete_test'),
+    path('api-key/', views.get_api_key, name='get_api_key'),
 ]
