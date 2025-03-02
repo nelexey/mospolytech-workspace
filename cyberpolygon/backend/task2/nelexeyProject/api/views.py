@@ -11,6 +11,10 @@ from .models import APIKey
 from .serializers import (
     TestSerializer, TestStatisticsSerializer, TestStatsSummarySerializer
 )
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import get_object_or_404
+from django.db.models import FloatField, ExpressionWrapper
 
 
 class APIKeyPermission(permissions.BasePermission):
@@ -116,3 +120,131 @@ def generate_api_key(request):
         messages.info(request, 'У вас уже есть API ключ')
     
     return render(request, 'api/api_key.html', {'api_key': api_key})
+
+
+def get_api_key_from_request(request):
+    """Extract API key from request headers or query parameters"""
+    api_key = request.headers.get('X-API-Key') or request.GET.get('api_key')
+    return api_key
+
+
+def api_key_required(view_func):
+    """Decorator to check if a valid API key is provided"""
+    def wrapper(request, *args, **kwargs):
+        api_key_value = get_api_key_from_request(request)
+        
+        # Отладочная информация
+        print(f"Request headers: {dict(request.headers)}")
+        print(f"Query parameters: {request.GET}")
+        print(f"API key from request: {api_key_value}")
+        
+        if not api_key_value:
+            return JsonResponse({'error': 'API ключ не предоставлен'}, status=401)
+        
+        try:
+            api_key = APIKey.objects.get(key=api_key_value, is_active=True)
+            print(f"API key found: {api_key}, User: {api_key.user.username}, Role: {api_key.user.role}")
+            request.api_key = api_key
+            request.user = api_key.user
+            return view_func(request, *args, **kwargs)
+        except APIKey.DoesNotExist:
+            print(f"API key not found: {api_key_value}")
+            return JsonResponse({'error': 'Недействительный API ключ'}, status=401)
+    
+    return wrapper
+
+
+@require_http_methods(["GET"])
+@api_key_required
+def test_statistics(request, test_id=None):
+    """
+    Get statistics for tests
+    
+    If test_id is provided, get statistics for specific test
+    Otherwise get statistics for all tests owned by the user
+    """
+    user = request.user
+    
+    # Проверяем, является ли пользователь тестером
+    if user.role != 'tester':
+        return JsonResponse({'error': 'Доступ запрещен. Только тестеры могут получать статистику тестов.'}, status=403)
+    
+    if test_id:
+        # Получаем статистику для конкретного теста
+        test = get_object_or_404(Test, id=test_id, owner=user)
+        
+        # Собираем общую статистику по тесту
+        stats = TestStatistics.objects.filter(test=test)
+        
+        # Рассчитываем средний балл в процентах
+        avg_score_expression = ExpressionWrapper(
+            Sum(F('result')) * 100.0 / Sum(F('max_result')),
+            output_field=FloatField()
+        )
+        
+        aggregated_stats = stats.aggregate(
+            total_attempts=Count('id'),
+            avg_score_percent=avg_score_expression,
+            avg_time_seconds=Avg('time_spent'),
+        )
+        
+        # Собираем детальную статистику по попыткам
+        detailed_stats = []
+        for stat in stats:
+            detailed_stats.append({
+                'user_id': stat.user.id,
+                'username': stat.user.username,
+                'attempt_number': stat.attempt_number,
+                'score': stat.result,
+                'max_score': stat.max_result,
+                'percent': round((stat.result / stat.max_result * 100), 2) if stat.max_result > 0 else 0,
+                'time_spent': stat.time_spent,
+                'date_completed': stat.date_taken,
+            })
+        
+        response_data = {
+            'test_id': test.id,
+            'test_title': test.title,
+            'summary': {
+                'total_attempts': aggregated_stats['total_attempts'],
+                'avg_score_percent': round(aggregated_stats['avg_score_percent'] or 0, 2),
+                'avg_time_seconds': round(aggregated_stats['avg_time_seconds'] or 0, 2),
+            },
+            'attempts': detailed_stats
+        }
+        
+    else:
+        # Получаем статистику для всех тестов пользователя
+        tests = Test.objects.filter(owner=user)
+        
+        tests_stats = []
+        for test in tests:
+            # Собираем статистику для каждого теста
+            stats = TestStatistics.objects.filter(test=test)
+            
+            # Рассчитываем средний балл в процентах
+            avg_score_expression = ExpressionWrapper(
+                Sum(F('result')) * 100.0 / Sum(F('max_result')),
+                output_field=FloatField()
+            )
+            
+            aggregated_stats = stats.aggregate(
+                total_attempts=Count('id'),
+                avg_score_percent=avg_score_expression,
+                avg_time_seconds=Avg('time_spent'),
+            )
+            
+            tests_stats.append({
+                'test_id': test.id,
+                'test_title': test.title,
+                'total_attempts': aggregated_stats['total_attempts'],
+                'avg_score_percent': round(aggregated_stats['avg_score_percent'] or 0, 2),
+                'avg_time_seconds': round(aggregated_stats['avg_time_seconds'] or 0, 2),
+            })
+        
+        response_data = {
+            'tests_count': len(tests),
+            'tests': tests_stats
+        }
+    
+    return JsonResponse(response_data)
