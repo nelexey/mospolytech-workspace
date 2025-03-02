@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from tests.models import Test
 from tests.forms import TestCreationForm
+from api.models import APIKey
 import json
 
 
@@ -14,7 +15,8 @@ def tester_panel(request):
         return redirect('core:home')
 
     tests = Test.objects.filter(owner=request.user)
-    return render(request, 'tester_panel/panel.html', {'tests': tests})
+    api_key = APIKey.objects.filter(user=request.user, is_active=True).first()
+    return render(request, 'tester_panel/panel.html', {'tests': tests, 'api_key': api_key})
 
 
 @login_required
@@ -179,3 +181,17 @@ def delete_test(request, test_id):
 def get_test_json(request, test_id):
     test = get_object_or_404(Test, id=test_id, owner=request.user)
     return JsonResponse(test.test)
+
+
+@login_required
+def get_api_key(request):
+    if request.user.role != 'tester':
+        messages.error(request, 'Доступ запрещен')
+        return redirect('core:home')
+        
+    if request.method == 'POST':
+        api_key = APIKey.get_or_create_key(request.user)
+        messages.success(request, 'API ключ успешно создан/получен')
+        return redirect('tester_panel:tester_panel')
+        
+    return redirect('tester_panel:tester_panel')
