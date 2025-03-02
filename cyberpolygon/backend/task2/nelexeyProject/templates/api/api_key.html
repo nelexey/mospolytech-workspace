@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}API Ключ{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Ваш API ключ</h4>
+                </div>
+                <div class="card-body">
+                    {% if api_key %}
+                        <div class="alert alert-info">
+                            <p><strong>Важно:</strong> Сохраните этот ключ в надежном месте. Он будет использоваться для доступа к API.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="apiKey">API Ключ:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="apiKey" value="{{ api_key.key }}" readonly>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="copyApiKey()">
+                                        Копировать
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <p><strong>Создан:</strong> {{ api_key.created_at }}</p>
+                            {% if api_key.last_used %}
+                                <p><strong>Последнее использование:</strong> {{ api_key.last_used }}</p>
+                            {% endif %}
+                            <p><strong>Статус:</strong> {% if api_key.is_active %}Активен{% else %}Неактивен{% endif %}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Как использовать API ключ</h5>
+                            <p>Для доступа к API добавьте заголовок <code>X-API-Key</code> с вашим ключом в каждый запрос:</p>
+                            <pre class="bg-light p-3"><code>X-API-Key: {{ api_key.key }}</code></pre>
+                            
+                            <h6 class="mt-3">Доступные эндпоинты:</h6>
+                            <ul>
+                                <li><code>/api/stats/</code> - Статистика по тестам</li>
+                                <li><code>/api/key-info/</code> - Информация о вашем API ключе</li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            У вас еще нет API ключа. Обратитесь к администратору.
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'home' %}" class="btn btn-secondary">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyApiKey() {
+    var apiKeyInput = document.getElementById("apiKey");
+    apiKeyInput.select();
+    apiKeyInput.setSelectionRange(0, 99999); // Для мобильных устройств
+    document.execCommand("copy");
+    alert("API ключ скопирован в буфер обмена");
+}
+</script>
+{% endblock %} 
