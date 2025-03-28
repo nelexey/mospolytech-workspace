@@ -11,10 +11,11 @@
         nav { margin-bottom: 20px; }
         nav a { margin-right: 10px; text-decoration: none; color: #0066cc; }
         nav a:hover { text-decoration: underline; }
-        table { width: 100%; border-collapse: collapse; }
-        table, th, td { border: 1px solid #ddd; }
-        th, td { padding: 10px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        .article-preview { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .article-preview h2 { margin-bottom: 10px; }
+        .article-preview p { color: #666; }
+        .article-preview a { text-decoration: none; color: #0066cc; }
+        .article-preview a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -23,39 +24,21 @@
         
         <nav>
             <a href="<?= BASE_URL ?>/">Главная</a>
-            <a href="<?= BASE_URL ?>/home/about">О проекте</a>
-            <a href="<?= BASE_URL ?>/home/users">Пользователи</a>
+            <a href="<?= BASE_URL ?>/home/about">О блоге</a>
         </nav>
         
-        <h2>Добро пожаловать в демо-проект MVC!</h2>
-        
-        <p>Этот проект демонстрирует базовую структуру MVC-архитектуры на PHP.</p>
-        <p>Выберите одну из ссылок в меню навигации для перехода между страницами.</p>
-        
-        <h3>Краткий список пользователей:</h3>
-        
-        <?php if (!empty($users)): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?= $user['id'] ?></td>
-                            <td><?= $user['name'] ?></td>
-                            <td><?= $user['email'] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <p><a href="<?= BASE_URL ?>/home/users">Перейти на страницу пользователей &raquo;</a></p>
+        <?php if (!empty($articles)): ?>
+            <div class="articles">
+                <?php foreach ($articles as $article): ?>
+                    <div class="article-preview">
+                        <h2><?= $article['title'] ?></h2>
+                        <p><?= $article['description'] ?></p>
+                        <a href="<?= BASE_URL ?>/home/article/<?= $article['id'] ?>">Читать полностью &raquo;</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         <?php else: ?>
-            <p>Нет доступных пользователей.</p>
+            <p>Статей пока нет.</p>
         <?php endif; ?>
     </div>
 </body>

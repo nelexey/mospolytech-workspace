@@ -11,8 +11,6 @@ spl_autoload_register(function ($class) {
 define('BASE_PATH', dirname(__DIR__));
 define('BASE_URL', '/php/mospolytech-workspace/framework/public');
 
-var_dump(BASE_URL);
-
 
 require_once BASE_PATH . '\src\core\Router.php';
 

@@ -7,23 +7,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $userModel = $this->model('User');
-        $users = $userModel->getAllUsers();
+        $articleModel = $this->model('Article');
+        $articles = $articleModel->getAllArticles();
         
         $this->view('home/index', [
-            'title' => 'Главная страница',
-            'users' => $users
+            'title' => 'Блог',
+            'articles' => $articles
         ]);
     }
     
     public function about()
     {
         $this->view('home/about', [
-            'title' => 'О проекте',
-            'description' => 'Это проект на PHP.',
-            'features' => [
-                "по паттерну MVC",
-            ]
+            'title' => 'О блоге'
         ]);
     }
     
@@ -36,6 +32,31 @@ class HomeController extends Controller
             'title' => 'Список пользователей',
             'users' => $users,
             'total' => count($users)
+        ]);
+    }
+    
+    public function article($id = null)
+    {
+        if ($id === null) {
+            header('Location: ' . BASE_URL . '/');
+            exit;
+        }
+        
+        $articleModel = $this->model('Article');
+        $article = $articleModel->getArticleById($id);
+        
+        if (!$article) {
+            header('Location: ' . BASE_URL . '/');
+            exit;
+        }
+        
+        $commentModel = $this->model('Comment');
+        $comments = $commentModel->getCommentsWithReplies($id);
+        
+        $this->view('home/article', [
+            'title' => $article['title'],
+            'article' => $article,
+            'comments' => $comments
         ]);
     }
 } 
