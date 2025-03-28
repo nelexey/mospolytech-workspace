@@ -28,10 +28,19 @@
             <a href="<?= BASE_URL ?>/article/list">Список статей</a>
         </nav>
         
-        <div class="welcome">
-            <h2>Добро пожаловать в блог!</h2>
-            <p>Здесь много интере сных записей из таблицы articles и comments, которые пишут настоящие Users!!!!</p>
-        </div>
     </div>
+    <?php if (!empty($articles)): ?>
+            <div class="articles">
+                <?php foreach ($articles as $article): ?>
+                    <div class="article-preview">
+                        <h2><?= $article['title'] ?></h2>
+                        <p><?= $article['description'] ?></p>
+                        <a href="<?= BASE_URL ?>/article/show/<?= $article['id'] ?>">Читать полностью &raquo;</a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p>Статей пока нет.</p>
+    <?php endif; ?>
 </body>
 </html> 
