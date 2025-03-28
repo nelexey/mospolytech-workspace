@@ -1,28 +1,40 @@
 <?php
 namespace src\models;
 
+use src\core\Database;
+
 class User
 {
-    // Имитация получения данных из базы данных
+    private $db;
+    private $table = 'users';
+    
+    public function __construct()
+    {
+        $this->db = Database::getInstance();
+    }
+    
     public function getAllUsers()
     {
-        return [
-            ['id' => 1, 'name' => 'Иван', 'email' => 'ivan@example.com'],
-            ['id' => 2, 'name' => 'Мария', 'email' => 'maria@example.com'],
-            ['id' => 3, 'name' => 'Алексей', 'email' => 'alex@example.com']
-        ];
+        return $this->db->fetchAll("SELECT * FROM {$this->table}");
     }
     
     public function getUserById($id)
     {
-        $users = $this->getAllUsers();
-        
-        foreach ($users as $user) {
-            if ($user['id'] == $id) {
-                return $user;
-            }
-        }
-        
-        return null;
+        return $this->db->fetch("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
     }
-} 
+    
+    public function createUser($data)
+    {
+        return $this->db->insert($this->table, $data);
+    }
+    
+    public function updateUser($id, $data)
+    {
+        $this->db->update($this->table, $data, "id = ?", [$id]);
+    }
+    
+    public function deleteUser($id)
+    {
+        $this->db->delete($this->table, "id = ?", [$id]);
+    }
+}
