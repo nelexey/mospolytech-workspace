@@ -6,12 +6,11 @@
     <title>Простой калькулятор</title>
     <?php
     function customEval($expression) {
-        // Удаляем все пробелы из выражения
+
         $expression = str_replace(' ', '', $expression);
         
-        // Функция для вычисления простого выражения без скобок
         function evaluateSimple($expr) {
-            // Сначала обрабатываем умножение и деление
+
             while (preg_match('/(-?\d+\.?\d*)([\*\/])(-?\d+\.?\d*)/', $expr, $matches)) {
                 $left = $matches[1];
                 $operator = $matches[2];
@@ -30,16 +29,13 @@
                 $expr = str_replace($matches[0], $result, $expr);
             }
             
-            // Затем обрабатываем сложение и вычитание
-            // Сначала преобразуем все вхождения -- в +
             $expr = str_replace('--', '+', $expr);
             
-            // Обработка унарных операторов в начале строки
             if (substr($expr, 0, 1) == '+') {
                 $expr = substr($expr, 1);
             }
             
-            // Обработка сложения и вычитания
+
             while (preg_match('/(-?\d+\.?\d*)([\+\-])(-?\d+\.?\d*)/', $expr, $matches)) {
                 $left = $matches[1];
                 $operator = $matches[2];
@@ -58,13 +54,11 @@
             return $expr;
         }
         
-        // Обработка скобок с использованием рекурсии
+
         while (preg_match('/\(([^()]+)\)/', $expression, $matches)) {
             $subResult = evaluateSimple($matches[1]);
             $expression = str_replace($matches[0], $subResult, $expression);
         }
-        
-        // Вычисление окончательного результата
         return evaluateSimple($expression);
     }
     ?>
