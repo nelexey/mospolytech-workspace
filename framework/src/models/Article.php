@@ -1,53 +1,39 @@
 <?php
 namespace src\models;
 
-use src\core\Database;
+use src\core\DataMapper;
 
-class Article
+class Article extends DataMapper
 {
-    private $db;
-    private $table = 'articles';
+    protected $table = 'articles';
     
-    public function __construct()
+    public function getByAuthor($authorId)
     {
-        $this->db = Database::getInstance();
+        return $this->where('author_id = ?', [$authorId], 'created_at DESC');
     }
     
-    public function getAllArticles()
+    public function getWithAuthor($id = null)
     {
-        return $this->db->fetchAll("SELECT * FROM {$this->table} ORDER BY created_at DESC");
-    }
-    
-    public function getArticleById($id)
-    {
-        return $this->db->fetch("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
-    }
-    
-    public function getArticlesByAuthor($authorId)
-    {
-        return $this->db->fetchAll(
-            "SELECT * FROM {$this->table} WHERE author_id = ? ORDER BY created_at DESC", 
-            [$authorId]
-        );
-    }
-    
-    public function createArticle($data)
-    {
-        // Убедимся, что дата создания добавлена
-        if (!isset($data['created_at'])) {
-            $data['created_at'] = date('Y-m-d H:i:s');
+        if ($id === null) {
+            return $this->query(
+                "SELECT a.*, u.name as author_name 
+                FROM {$this->table} a 
+                LEFT JOIN users u ON a.author_id = u.id 
+                ORDER BY a.created_at DESC"
+            )->fetchAll();
         }
         
-        return $this->db->insert($this->table, $data);
+        return $this->query(
+            "SELECT a.*, u.name as author_name 
+            FROM {$this->table} a 
+            LEFT JOIN users u ON a.author_id = u.id 
+            WHERE a.id = ?", 
+            [$id]
+        )->fetch();
     }
     
-    public function updateArticle($id, $data)
+    public function recent($limit = 5)
     {
-        $this->db->update($this->table, $data, "id = ?", [$id]);
-    }
-    
-    public function deleteArticle($id)
-    {
-        $this->db->delete($this->table, "id = ?", [$id]);
+        return $this->where('1', [], 'created_at DESC LIMIT ' . $limit);
     }
 } 

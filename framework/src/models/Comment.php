@@ -1,53 +1,45 @@
 <?php
 namespace src\models;
 
-use src\core\Database;
+use src\core\DataMapper;
 
-class Comment
+class Comment extends DataMapper
 {
-    private $db;
-    private $table = 'comments';
+    protected $table = 'comments';
     
-    public function __construct()
+    public function getByArticle($articleId)
     {
-        $this->db = Database::getInstance();
-    }
-    
-    public function getCommentsByArticleId($articleId)
-    {
-        return $this->db->fetchAll(
-            "SELECT * FROM {$this->table} WHERE article_id = ? AND parent_comment_id IS NULL ORDER BY created_at DESC", 
-            [$articleId]
+        return $this->where(
+            'article_id = ? AND parent_comment_id IS NULL', 
+            [$articleId], 
+            'created_at DESC'
         );
     }
     
-    public function getCommentById($id)
+    public function getReplies($commentId)
     {
-        return $this->db->fetch("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
-    }
-    
-    public function getCommentReplies($commentId)
-    {
-        return $this->db->fetchAll(
-            "SELECT * FROM {$this->table} WHERE parent_comment_id = ? ORDER BY created_at ASC", 
-            [$commentId]
+        return $this->where(
+            'parent_comment_id = ?', 
+            [$commentId], 
+            'created_at ASC'
         );
     }
     
-    public function getCommentsByAuthor($authorId)
+    public function getByAuthor($authorId)
     {
-        return $this->db->fetchAll(
-            "SELECT * FROM {$this->table} WHERE author_id = ? ORDER BY created_at DESC", 
-            [$authorId]
+        return $this->where(
+            'author_id = ?', 
+            [$authorId], 
+            'created_at DESC'
         );
     }
     
-    public function getCommentsWithReplies($articleId)
+    public function getWithReplies($articleId)
     {
-        // Сначала получаем все комментарии первого уровня
-        $rootComments = $this->getCommentsByArticleId($articleId);
+        // Get root comments
+        $rootComments = $this->getByArticle($articleId);
         
-        // Для каждого комментария добавляем его ответы
+        // Add replies to each comment
         foreach ($rootComments as &$comment) {
             $comment['replies'] = $this->getAllReplies($comment['id']);
         }
@@ -55,10 +47,9 @@ class Comment
         return $rootComments;
     }
     
-    // Рекурсивная функция для получения всех ответов (включая ответы на ответы)
     private function getAllReplies($commentId)
     {
-        $replies = $this->getCommentReplies($commentId);
+        $replies = $this->getReplies($commentId);
         
         foreach ($replies as &$reply) {
             $reply['replies'] = $this->getAllReplies($reply['id']);
@@ -67,41 +58,25 @@ class Comment
         return $replies;
     }
     
-    public function createComment($data)
+    public function delete($id)
     {
-        // Убедимся, что дата создания добавлена
-        if (!isset($data['created_at'])) {
-            $data['created_at'] = date('Y-m-d H:i:s');
-        }
-        
-        return $this->db->insert($this->table, $data);
-    }
-    
-    public function updateComment($id, $data)
-    {
-        $this->db->update($this->table, $data, "id = ?", [$id]);
-    }
-    
-    public function deleteComment($id)
-    {
-        // Сначала удаляем все ответы на комментарий
+        // First delete all replies
         $this->deleteRepliesRecursive($id);
         
-        // Затем удаляем сам комментарий
-        $this->db->delete($this->table, "id = ?", [$id]);
+        // Then delete the comment itself
+        parent::delete($id);
     }
     
     private function deleteRepliesRecursive($commentId)
     {
-        // Получаем все ответы на комментарий
-        $replies = $this->getCommentReplies($commentId);
+        $replies = $this->getReplies($commentId);
         
         foreach ($replies as $reply) {
-            // Рекурсивно удаляем ответы на ответы
+            // Recursively delete replies to replies
             $this->deleteRepliesRecursive($reply['id']);
             
-            // Удаляем текущий ответ
-            $this->db->delete($this->table, "id = ?", [$reply['id']]);
+            // Delete the reply
+            parent::delete($reply['id']);
         }
     }
 } 

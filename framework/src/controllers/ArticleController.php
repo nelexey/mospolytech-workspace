@@ -14,7 +14,7 @@ class ArticleController extends Controller
         }
         
         $articleModel = $this->model('Article');
-        $article = $articleModel->getArticleById($id);
+        $article = $articleModel->get($id);
         
         if (!$article) {
             header('Location: ' . BASE_URL . '/');
@@ -22,7 +22,7 @@ class ArticleController extends Controller
         }
         
         $commentModel = $this->model('Comment');
-        $comments = $commentModel->getCommentsWithReplies($id);
+        $comments = $commentModel->getWithReplies($id);
         
         $this->view('article/index', [
             'title' => $article['title'],
@@ -34,7 +34,7 @@ class ArticleController extends Controller
     public function list()
     {
         $articleModel = $this->model('Article');
-        $articles = $articleModel->getAllArticles();
+        $articles = $articleModel->all('created_at DESC');
         
         $this->view('article/list', [
             'title' => 'Блог',
