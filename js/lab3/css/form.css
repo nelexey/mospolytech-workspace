@@ -1,0 +1,104 @@
+.form-main {
+    min-height: calc(100vh - 450px);
+    padding: 30px 0;
+}
+
+.form-section-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.form-section-description {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.registration-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.form-group {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.required-mark {
+    color: red;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.radio-group,
+.checkbox-group {
+    margin-top: 5px;
+}
+
+.radio-item,
+.checkbox-item {
+    margin-bottom: 5px;
+}
+
+.form-actions {
+    margin: 20px 0;
+}
+
+.submit-button,
+.reset-button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.submit-button {
+    background-color: #F7931A;
+    color: white;
+    border: none;
+}
+
+.reset-button {
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+
+.form-note {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .registration-form {
+        padding: 10px;
+    }
+    
+    .form-group {
+        padding: 10px;
+    }
+} 
