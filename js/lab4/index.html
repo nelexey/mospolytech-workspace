@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB4</title>
+</head>
+<body>
+    <style>
+        .resolve-button {
+            padding: 8px;
+            border: 1px solid black;
+            margin: 20px 8px;
+
+            border-radius: 10px;
+        }
+
+        .resolve-button:hover {
+            cursor: pointer;
+            box-shadow: inset 1px 1px black;
+        }
+
+        .resolve-button:active {
+            background-color: black;
+
+        #inventory {
+            margin: 20px 0;
+        }
+
+        #progress {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #craft {
+            margin: 20px 0;
+        }
+
+        #inventory, #crafting, #craft-progress {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #inventory-list li {
+            margin: 5px 0;
+        }
+
+        .craft-button {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .craft-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .craft-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .craft-task {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .craft-task h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .main-status {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .failure {
+            color: red;
+        }
+
+        .craft-details {
+            margin-left: 15px;
+        }
+
+        .recipe {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .sub-craft, .main-craft {
+            margin: 8px 0;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #4CAF50;
+            width: 0%;
+            margin-top: 5px;
+            transition: width 0.1s linear;
+        }
+        }
+    </style>
+    <h1>
+       Некрасов Алексей Олегович - Лабораторная работа №4 
+    </h1>
+    <section id="resolve">
+        
+        <button class="resolve-button">
+            Job button
+        </button>
+        <hr>
+    </section>    
+    <section id="random-data-errors">
+        
+        <input type="text" id='input-num' placeholder="Введите число от 0 до 1...">
+        <button id="get-data-button">Отправить</button>
+        <hr>
+    </section>
+    <section id="craft">
+        <hr>
+        <h2>Система крафта</h2>
+        
+        <div id="inventory">
+            <h3>Инвентарь</h3>
+            <ul id="inventory-list"></ul>
+        </div>
+        
+        <div id="crafting">
+            <h3>Крафт предметов</h3>
+            <button id="craft-wood" class="craft-button" data-item="wood">Создать Дерево</button><br>
+            <button id="craft-ironOre" class="craft-button" data-item="ironOre">Создать Железную руду</button><br>
+            <button id="craft-stick" class="craft-button" data-item="stick">Создать Палку</button><br>
+            <button id="craft-ironIngot" class="craft-button" data-item="ironIngot">Создать Железный слиток</button><br>
+            <button id="craft-pickaxe" class="craft-button" data-item="pickaxe">Создать Кирку</button><br>
+        </div>
+        
+        <div id="craft-progress">
+            <h3>Прогресс крафта</h3>
+            <div id="craft-progress-list"></div>
+        </div>
+    </section>
+
+<script src="script.js"></script>
+</body>
+</html>
