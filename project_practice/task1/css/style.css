@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: linear-gradient(to bottom, #0f0f0f, #000000);
+    color: rgb(255, 254, 252);
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+p, a {
+    font-family: "Raleway", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: orangered;
+    cursor: pointer;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 2rem 0;
+
+    h1 {
+        font-family: "Tektur", sans-serif;
+        font-weight: 200; 
+        text-transform: uppercase;
+
+        font-size: 3rem;
+    }
+}
+
+.container {
+    margin: 0 10rem;
+}
+
+.hero-section {
+    margin-top: 12rem;
+}
+.hero-text {
+    margin-top: 1rem;
+    color: rgb(218, 218, 218);
+    font-size: 2rem;
+    font-weight: 500;
+
+    max-width: 50%;
+}
+
+.blocks-section {
+    margin-top: 12rem;
+}
+
+.blocks-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    padding: 2rem 0;
+    gap: 0.5rem;
+    row-gap: rem;
+
+    border: 2px solid rgba(53, 53, 53, 0.5);
+
+    border-radius: 60px;
+}
+
+.block {
+    box-sizing: border-box;
+    padding: 40px;
+
+    border: 2px solid rgb(53, 53, 53);
+    border-radius: 30px;
+
+    p {
+        font-family: "Tektur", sans-serif;
+        font-weight: 200; 
+        text-transform: uppercase;
+
+        font-size: 2rem;
+
+        margin-top: 8rem;
+        margin-right: 12rem;
+    }
+
+    transition: linear 0.2s;
+}
+
+.block:hover {
+    --edge-light: hsla(0, 0%, 50%, 1);
+    text-shadow: 0px 0px 10px var(--text-light);
+    background-color: #e2e2e2;
+    color: #0f0f0f;
+
+    border: 2px solid #e2e2e2;
+}
+
+.block:active {
+    --edge-light: hsla(0, 0%, 50%, 1);
+    text-shadow: 0px 0px 10px var(--text-light);
+    background-color: orangered;
+    color: #ffffff;
+
+    border: 2px solid orangered;
+}
+
+.circle {
+    position: absolute;
+    z-index: -1;
+}
+
+.circle-top-left {
+    position: fixed;
+    top: -20rem;
+    left: -20rem;
+    width: 60rem;
+    height: 60rem;
+    background-image: url('../svg/circle.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.circle-bottom-right {
+    position: fixed;
+    right: -20rem;
+    bottom: -20rem;
+    width: 60rem;
+    height: 60rem;
+    background-image: url('../svg/circle.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+footer {
+    margin-top: 10rem;
+    padding-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    p {
+        text-align: center;
+        color: gray;
+        font-size: 1.2rem;
+    }
+}
+
+  
+
+.hero-title {
+    font-family: "Tektur", sans-serif;
+    font-weight: 200; 
+    text-transform: uppercase;
+
+    font-size: 3rem;
+}
+
+.journal-article {
+    width: 80%;
+    margin: 0 auto 2rem;
+
+    h1 {
+        font-family: "Tektur", sans-serif;
+        font-weight: 200; 
+        text-transform: uppercase;
+    
+        font-size: 2rem;
+    };
+
+    p {
+        font-family: "Raleway", sans-serif;
+        font-size: 1.4rem;
+    };
+
+    padding: 2rem;
+    border: 2px solid rgba(53, 53, 53, 0.5);
+    border-radius: 30px;
+}
