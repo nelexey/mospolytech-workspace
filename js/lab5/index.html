@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №5</title>
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark-theme');
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Некрасов Алексей Олегович, 241-3210, Лабораторная работа №5</h1>
+        <button id="theme-toggle">Сменить тему</button>
+    </header>
+
+    <main>
+        <section id="gallery-section">
+            <h2>Галерея</h2>
+            <button id="refresh-gallery" class="refresh-btn">Обновить галерею</button>
+            <div id="gallery-container">
+                <div class="loader">Загрузка...</div>
+            </div>
+        </section>
+
+        <section id="temperature-section">
+            <h2>Отправка температуры</h2>
+            <form id="temperature-form">
+                <div class="form-group">
+                    <label for="room">Номер аудитории:</label>
+                    <input type="text" id="room" name="room" placeholder="Например: Пр-1315" required>
+                </div>
+                <div class="form-group">
+                    <label for="temperature">Температура:</label>
+                    <input type="number" id="temperature" name="temperature" step="0.1" required>
+                </div>
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
