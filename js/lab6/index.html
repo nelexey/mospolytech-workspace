@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №6</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        section {
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        button {
+            margin: 5px;
+        }
+        .history-item {
+            margin: 5px 0;
+        }
+        .version-display, .temp-display {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #rounds-history {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .history-item {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #choices {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Некрасов Алексей Олегович, 241-3210, Лабораторная работа №6</h1>
+
+    <section>
+        <h2>Версионирование</h2>
+        <input type="text" id="version-input" placeholder="Введите версию (например, 1.2.3)">
+        <button id="create-version">Создать версию</button>
+        <div class="version-display" id="version-display"></div>
+        <div id="version-buttons" style="display: none;">
+            <button id="major-btn">Major</button>
+            <button id="minor-btn">Minor</button>
+            <button id="patch-btn">Patch</button>
+            <button id="rollback-btn">Rollback</button>
+        </div>
+    </section>
+
+    <section>
+        <h2>Прямоугольник и квадрат</h2>
+        <div>
+            <input type="number" id="width-input" placeholder="Ширина">
+            <input type="number" id="height-input" placeholder="Высота">
+        </div>
+        <div>
+            <button id="calc-perimeter">Вычислить периметр</button>
+            <button id="calc-area">Вычислить площадь</button>
+        </div>
+        <div id="shape-result"></div>
+    </section>
+
+    <section>
+        <h2>Температура</h2>
+        <div>
+            <label>Температура 1:</label>
+            <input type="number" id="temp1-input" step="0.01" placeholder="°C">
+            <span id="temp1-display" class="temp-display"></span>
+        </div>
+        <div>
+            <label>Температура 2:</label>
+            <input type="number" id="temp2-input" step="0.01" placeholder="°C">
+            <span id="temp2-display" class="temp-display"></span>
+        </div>
+        <div>
+            <label><input type="radio" name="unit" value="celsius" checked> Цельсий (°C)</label>
+            <label><input type="radio" name="unit" value="kelvin"> Кельвин (K)</label>
+            <label><input type="radio" name="unit" value="fahrenheit"> Фаренгейт (°F)</label>
+        </div>
+        <div>
+            <button id="add-temps">Сложить</button>
+            <button id="subtract-temps">Вычесть</button>
+            <div id="temp-result"></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Камень-ножницы-бумага</h2>
+        <button id="start-stream">Следить за играми</button>
+        <button id="stop-stream" disabled>Остановить</button>
+        
+        <div>
+            <h3>Статистика</h3>
+            <div id="stats">
+                <div>Победы игрока 1: <span id="player1-wins">0</span></div>
+                <div>Победы игрока 2: <span id="player2-wins">0</span></div>
+                <div>Ничьи: <span id="draws">0</span></div>
+            </div>
+            
+            <h3>Выборы игроков</h3>
+            <div id="choices">
+                <div>
+                    <h4>Игрок 1:</h4>
+                    <div>Камень: <span id="player1-rock">0</span></div>
+                    <div>Ножницы: <span id="player1-scissors">0</span></div>
+                    <div>Бумага: <span id="player1-paper">0</span></div>
+                </div>
+                <div>
+                    <h4>Игрок 2:</h4>
+                    <div>Камень: <span id="player2-rock">0</span></div>
+                    <div>Ножницы: <span id="player2-scissors">0</span></div>
+                    <div>Бумага: <span id="player2-paper">0</span></div>
+                </div>
+            </div>
+            
+            <h3>История раундов</h3>
+            <div id="rounds-history"></div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
